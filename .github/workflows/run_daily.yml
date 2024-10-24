@@ -1,11 +1,11 @@
 name: Run Jupyter Notebook Daily
 
 on:
-  # This will schedule the action to run daily at 4 PM UTC
+  # Schedule the workflow to run every day at 4 PM UTC
   schedule:
     - cron: "0 16 * * *"
 
-  # This allows manual triggering of the workflow
+  # Allows manual triggering of the workflow
   workflow_dispatch:
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
         run: |
           jupyter nbconvert --to notebook --execute barcelonadori_map.ipynb --output updated_barcelonadori_map.ipynb
 
-      # Step 5: Commit changes
+      # Step 5: Commit changes (if any)
       - name: Commit changes
         run: |
           git config --global user.name "github-actions[bot]"
@@ -44,6 +44,7 @@ jobs:
 
       # Step 6: Push changes to the repository
       - name: Push changes
-        uses: ad-m/github-push-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
