@@ -1,0 +1,49 @@
+name: Run Jupyter Notebook Daily
+
+on:
+  # This will schedule the action to run daily at 4 PM UTC
+  schedule:
+    - cron: "0 16 * * *"
+
+  # This allows manual triggering of the workflow
+  workflow_dispatch:
+
+jobs:
+  run-notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Replace with your Python version
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install nbconvert
+
+      # Step 4: Run the Jupyter Notebook and generate output (e.g., updated notebook, data, map)
+      - name: Run Jupyter Notebook
+        run: |
+          jupyter nbconvert --to notebook --execute barcelonadori_map.ipynb --output updated_barcelonadori_map.ipynb
+
+      # Step 5: Commit changes
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Update notebook and map with new data [skip ci]" || echo "No changes to commit"
+
+      # Step 6: Push changes to the repository
+      - name: Push changes
+        uses: ad-m/github-push-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
