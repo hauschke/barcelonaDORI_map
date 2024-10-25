@@ -23,6 +23,11 @@ jobs:
         with:
           python-version: '3.x'  # Replace with your Python version
 
+      - name: Set up Jupyter kernel
+        run: |
+        pip install ipykernel
+        python -m ipykernel install --user --name python3
+
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
