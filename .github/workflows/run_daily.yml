@@ -29,4 +29,17 @@ jobs:
         
       - name: Execute notebook
         run: |
-          jupyter nbconvert --to notebook --execute barcelonadori_map.ipynb --output updated_barcelonadori_map.ipynb
+          jupyter nbconvert --to notebook --execute barcelonadori_map.ipynb --output barcelonadori_map.ipynb --inplace
+
+      - name: Configure Git
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+
+      - name: Commit and push changes
+        run: |
+          git add barcelonadori_map.ipynb
+          git commit -m "Update barcelonadori_map.ipynb with latest data"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
