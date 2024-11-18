@@ -29,6 +29,7 @@ jobs:
         
       - name: Execute notebook
         run: |
+          mkdir -p graphics  # Create directory for images if it doesn't exist
           jupyter nbconvert --to notebook --execute barcelonadori_map.ipynb --output barcelonadori_map.ipynb --inplace
 
       - name: Configure Git
@@ -38,8 +39,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git add barcelonadori_map.ipynb
-          git commit -m "Update barcelonadori_map.ipynb with latest data"
+          git add barcelonadori_map.ipynb graphics/*  # Include saved images
+          git commit -m "Update barcelonadori_map.ipynb and graphics with latest data"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
