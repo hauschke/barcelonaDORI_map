@@ -1,5 +1,5 @@
 # Mapping the Barcelona Declaration
-Simple visualizations of the signatories and supporters of the Barcelona Declaration on Open Research Information. The graphics are updated daily at 16:00 CET.
+Simple visualizations of the signatories and supporters of the Barcelona Declaration on Open Research Information. The graphics are updated daily at 16:00 CET. The underlying data is being pulled from https://github.com/cameronneylon/barcelona-declaration-website.
 
 # Worldmap
 ![Number of Institutions per Country](graphics/BarcelonaDORI_country_map.png)
